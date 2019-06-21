@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_avatar_size">50dp</dimen>
+    <dimen name="user_name_margin_end">16dp</dimen>
+    <dimen name="user_name_margin_start">8dp</dimen>
+    <dimen name="users_list_margin">8dp</dimen>
+</resources>

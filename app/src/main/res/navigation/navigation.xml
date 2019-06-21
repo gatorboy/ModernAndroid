@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/usersFragment">
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.smenedi.modernandroid.ui.users.UsersFragment"
+        android:label="UsersFragment">
+        <action
+            android:id="@+id/action_usersFragment_to_reposFragment"
+            app:destination="@id/reposFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/usersFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/reposFragment"
+        android:name="com.smenedi.modernandroid.ui.repos.UserReposFragment"
+        android:label="fragment_repos"
+        tools:layout="@layout/fragment_repos">
+        <argument
+            android:name="username"
+            app:argType="string"/>
+    </fragment>
+</navigation>

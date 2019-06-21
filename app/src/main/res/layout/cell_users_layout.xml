@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout">
+    <data>
+        <variable
+            name="user"
+            type="com.smenedi.modernandroid.domain.User"/>
+        <variable
+            name="userClickListener"
+            type="com.smenedi.modernandroid.ui.users.UserClickListener"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{() -> userClickListener.onClick(user)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/useravatar"
+            android:layout_width="@dimen/user_avatar_size"
+            android:layout_height="@dimen/user_avatar_size"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:useravatar="@{user}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/user_name_margin_start"
+            android:layout_marginEnd="@dimen/user_name_margin_end"
+            android:text="@{user.username}"
+            app:layout_constraintBottom_toBottomOf="@+id/useravatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/useravatar"
+            app:layout_constraintTop_toTopOf="@+id/useravatar"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
