@@ -1,6 +1,7 @@
-package com.smenedi.modernandroid.network
+package com.smenedi.modernandroid.data.network
 
-import com.smenedi.modernandroid.database.DatabaseUser
+import com.smenedi.modernandroid.data.database.DatabaseUser
+import com.smenedi.modernandroid.domain.User
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -28,8 +29,18 @@ data class NetworkRepo (
 )
 
 
+fun NetworkUsersContainer.asDomainModel(): List<User> {
+    return users.map {
+        User(id =  it.id, username = it.username, avatarUrl = it.avatarUrl)
+    }
+}
+
 fun NetworkUsersContainer.asDatabaseModel(): List<DatabaseUser> {
     return users.map {
         DatabaseUser(id =  it.id, username = it.username, avatarurl = it.avatarUrl)
     }
+}
+
+fun NetworkUser.asDomainModel(): User {
+    return User(id =  id, username = username, avatarUrl = avatarUrl)
 }

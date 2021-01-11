@@ -1,4 +1,4 @@
-package com.smenedi.modernandroid.database
+package com.smenedi.modernandroid.data.database
 
 import android.content.Context
 import androidx.room.Database
@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 abstract class GitDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
-    abstract fun repoDao(): RepoDao
+//    abstract fun repoDao(): RepoDao
 
     companion object {
         @Volatile
@@ -18,7 +18,11 @@ abstract class GitDatabase : RoomDatabase() {
         fun getInstance(context: Context): GitDatabase {
             synchronized(this) {
                 if (!::INSTANCE.isInitialized) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, GitDatabase::class.java, "git_database").build()
+                    INSTANCE = Room.databaseBuilder(
+                        context.applicationContext,
+                        GitDatabase::class.java,
+                        "git_database"
+                    ).fallbackToDestructiveMigration().build()
                 }
                 return INSTANCE
 

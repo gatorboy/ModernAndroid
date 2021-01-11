@@ -1,4 +1,4 @@
-package com.smenedi.modernandroid.repository
+package com.smenedi.modernandroid.data.repository
 
 // A generic class that contains data and status about loading this data.
 sealed class Result<T>(

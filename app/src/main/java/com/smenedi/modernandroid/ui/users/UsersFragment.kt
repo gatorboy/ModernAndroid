@@ -5,46 +5,52 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.viewModelScope
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.smenedi.modernandroid.databinding.FragmentUsersBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
- * A simple [Fragment] subclass.
- *
+ * A simple user list fragment as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class UsersFragment : Fragment() {
-
-    lateinit var viewModel: UsersViewModel
-
+    private val viewmodel by viewModels<UsersViewModel>()
+    lateinit var binding: FragmentUsersBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentUsersBinding.inflate(inflater, container, false)
+        binding = FragmentUsersBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        val application = requireNotNull(this.activity).application
-        val factory = UsersViewModelFactory(application)
-        viewModel = ViewModelProviders.of(this, factory).get(UsersViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+    }
 
-        binding.lifecycleOwner = this
-
-        val adapter = UsersAdapter(viewModel.viewModelScope, UserClickListener { username: String ->
-            viewModel.onUserClicked(username)
-        })
-
-        binding.viewModel = viewModel
-        binding.users.adapter = adapter
+    /**
+     * Sets up the view in the fragment
+     */
+    private fun setUpViews() {
+        with(binding) {
+            list.adapter = UserListAdapter(UserClickListener { username: String ->
+                viewmodel.onUserClicked(username)
+            })
+            listViewModel = viewmodel
+            lifecycleOwner = viewLifecycleOwner
+            list.addItemDecoration(DividerItemDecoration(context, LinearLayout.HORIZONTAL))
+        }
 
         //navigate to user repos
-        viewModel.navigateToUserRepo.observe(this, Observer { username ->
+        viewmodel.navigateToUserRepo.observe(viewLifecycleOwner, { username ->
             username?.let {
                 this.findNavController().navigate(UsersFragmentDirections.actionUsersFragmentToReposFragment(it))
-                viewModel.onUserReposNavigated()
+                viewmodel.onUserReposNavigated()
             }
         })
-
-        return binding.root
+        
     }
 }

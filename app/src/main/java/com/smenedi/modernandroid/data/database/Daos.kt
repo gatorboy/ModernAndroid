@@ -1,15 +1,17 @@
-package com.smenedi.modernandroid.database
+package com.smenedi.modernandroid.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.smenedi.modernandroid.domain.DatabaseRepo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user")
-    fun getAllUsers(): LiveData<List<DatabaseUser>>
+    fun getAllUsers(): Flow<List<DatabaseUser>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: List<DatabaseUser>)

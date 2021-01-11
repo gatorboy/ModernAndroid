@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ModernAndroid</string>
+    <string name="title_activity_main">Users</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="error">Error occurred. Try again later.</string>
+    <string name="empty">No data available. Try again later.</string>
 </resources>

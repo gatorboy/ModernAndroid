@@ -6,15 +6,29 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.smenedi.modernandroid.R
 import com.smenedi.modernandroid.domain.User
-import com.smenedi.modernandroid.repository.Status
-import com.smenedi.modernandroid.ui.users.UsersAdapter
-import timber.log.Timber
+import com.smenedi.modernandroid.domain.UserListItem
+import com.smenedi.modernandroid.ui.users.UserListAdapter
 
-@BindingAdapter("goneIfNotNull")
-fun goneIfNotNull(view: View, it: Any?) {
-    view.visibility = if (it != null) View.GONE else View.VISIBLE
+@BindingAdapter("goneUnless")
+fun goneUnless(view: View, boolean: Boolean) {
+    view.visibility = if (boolean) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("gone")
+fun gone(view: View, boolean: Boolean) {
+    view.visibility = if (boolean) View.GONE else View.VISIBLE
+}
+
+@BindingAdapter("users")
+fun users(view: RecyclerView, users: List<UserListItem>?) {
+    val adapter = view.adapter as UserListAdapter
+    if (users.isNullOrEmpty()) {
+        view.visibility = View.GONE
+    } else {
+        view.visibility = View.VISIBLE
+        adapter.submit(users)
+    }
 }
 
 
@@ -28,13 +42,7 @@ fun ImageView.setUserAvatar(user: User?) {
     }
 }
 
-@BindingAdapter("usersListData")
-fun RecyclerView.setUsers(users: List<User>?) {
-    val adapter = adapter as UsersAdapter
-    adapter.addHeaderAndSubmitList(users)
-}
-
-@BindingAdapter("usersListStatus")
+/*@BindingAdapter("usersListStatus")
 fun ImageView.setStatus(status: Status?) {
     Timber.d("status is ${status.toString()}")
     when(status) {
@@ -48,5 +56,5 @@ fun ImageView.setStatus(status: Status?) {
         }
         else -> visibility = View.GONE
     }
-}
+}*/
 

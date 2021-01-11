@@ -4,4 +4,7 @@
     <dimen name="user_name_margin_end">16dp</dimen>
     <dimen name="user_name_margin_start">8dp</dimen>
     <dimen name="users_list_margin">8dp</dimen>
+    <dimen name="error_margin">24dp</dimen>
+    <dimen name="error_text">16sp</dimen>
+    <dimen name="category_name">16sp</dimen>
 </resources>

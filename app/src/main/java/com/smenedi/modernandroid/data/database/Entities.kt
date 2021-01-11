@@ -1,7 +1,5 @@
-package com.smenedi.modernandroid.database
+package com.smenedi.modernandroid.data.database
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -31,6 +29,6 @@ data class DatabaseRepo(
 )
 
 
-fun LiveData<List<DatabaseUser>>.asDomainModel(): LiveData<List<User>> {
-    return map { it.map { User(id = it.id, username = it.username, avatarUrl = it.avatarurl) } }
+fun List<DatabaseUser>.asDomainModel(): List<User> {
+    return map {  User(id = it.id, username = it.username, avatarUrl = it.avatarurl) } 
 }
